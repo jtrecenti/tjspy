@@ -119,6 +119,17 @@ doc = ["doc8", "sphinx (>=7.0.0)", "sphinx-autobuild", "sphinx-autodoc-typehints
 test = ["dateparser (==1.*)", "pre-commit", "pytest", "pytest-cov", "pytest-mock", "pytz (==2021.1)", "simplejson (==3.*)"]
 
 [[package]]
+name = "astroid"
+version = "3.3.2"
+description = "An abstract syntax tree for Python with inference support."
+optional = false
+python-versions = ">=3.9.0"
+files = [
+    {file = "astroid-3.3.2-py3-none-any.whl", hash = "sha256:9f8136ce9770e0f912401b25a0f15d5c2ec20b50e99b1b413ac0778fe53ff6f1"},
+    {file = "astroid-3.3.2.tar.gz", hash = "sha256:99e9b5b602cbb005434084309213d6af32bf7a9b743c836749168b8e2b330cbd"},
+]
+
+[[package]]
 name = "asttokens"
 version = "2.4.1"
 description = "Annotate AST trees with source code positions"
@@ -2505,6 +2516,26 @@ lint = ["flake8 (>=6.0)", "mypy (==1.11.0)", "pytest (>=6.0)", "ruff (==0.5.5)",
 test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=8.0)", "setuptools (>=70.0)", "typing_extensions (>=4.9)"]
 
 [[package]]
+name = "sphinx-autoapi"
+version = "3.3.0"
+description = "Sphinx API documentation generator"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "sphinx_autoapi-3.3.0-py2.py3-none-any.whl", hash = "sha256:963034d94b0798267f2d2388a3bbcb6845dcc3a9ff1b411c1294d2ced9a8679c"},
+    {file = "sphinx_autoapi-3.3.0.tar.gz", hash = "sha256:1596d25504e1fa1839de326b8f6816d97b08dff522aa44d3bb585e270a97c88d"},
+]
+
+[package.dependencies]
+astroid = {version = ">=3.0.0a1", markers = "python_version >= \"3.12\""}
+Jinja2 = "*"
+PyYAML = "*"
+sphinx = ">=6.1.0"
+
+[package.extras]
+docs = ["furo", "sphinx", "sphinx-design"]
+
+[[package]]
 name = "sphinxcontrib-applehelp"
 version = "2.0.0"
 description = "sphinxcontrib-applehelp is a Sphinx extension which outputs Apple help books"
@@ -3004,4 +3035,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<4.0"
-content-hash = "71916a93ab8652db6dd63ebb1dc69f11f7c44c78484f84759b8ec5aa3d76803b"
+content-hash = "466c2ca7706ec1ca4c9ffe7d303db1f9ecd1d1576fde5da65009c6032b2d2b33"
