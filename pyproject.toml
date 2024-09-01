@@ -23,6 +23,7 @@ jupyter = "^1.1.1"
 pytest = "^8.3.2"
 sphinx = "^8.0.2"
 myst-nb = "^1.1.1"
+autoapi = "^2.0.1"
 
 [tool.semantic_release]
 version_toml = [
