@@ -2,6 +2,8 @@
 
 Web Scraper TJSP in python
 
+(this is just a test package, dont use it)
+
 ## Installation
 
 ```bash

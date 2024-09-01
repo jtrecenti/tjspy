@@ -55,10 +55,12 @@ def download(busca, dir=".", classe="", assunto="", comarca="", n_processo="", d
     path = Path(dir).resolve()
     file_path = path / "search.html"
 
-    response = requests.post("https://esaj.tjsp.jus.br/cjpg/pesquisar.do",
-                             data=query_post,
-                             verify=False,
-                             headers={'User-Agent': tjspy.tjspy.esaj_ua()})
+    ses = requests.Session()
+
+    response = ses.post("https://esaj.tjsp.jus.br/cjpg/pesquisar.do",
+                        data=query_post,
+                        verify=False,
+                        headers={'User-Agent': tjspy.tjspy.esaj_ua()})
 
     with open(file_path, 'wb') as f:
         f.write(response.content)
@@ -78,10 +80,10 @@ def download(busca, dir=".", classe="", assunto="", comarca="", n_processo="", d
         }
 
         file_name = path / f"pag_{str(page).zfill(5)}.html"
-        response = requests.get("https://esaj.tjsp.jus.br/cjpg/trocarDePagina.do",
-                                params=query_get,
-                                verify=False,
-                                headers={'User-Agent': tjspy.tjspy.esaj_ua()})
+        response = ses.get("https://esaj.tjsp.jus.br/cjpg/trocarDePagina.do",
+                            params=query_get,
+                            verify=False,
+                            headers={'User-Agent': tjspy.tjspy.esaj_ua()})
 
         with open(file_name, 'wb') as f:
             f.write(response.content)
@@ -117,17 +119,13 @@ def parse_cjpg_lawsuit(node):
     :param node: A BeautifulSoup element representing a lawsuit
     :return: A DataFrame with the parsed information
     """
-    print("Starting to parse lawsuit node")
 
     cd = node.select_one("a[title='Visualizar Inteiro Teor']").get("name").strip()
-    print(f"Code: {cd}")
 
     id_text = node.select_one("a[title='Visualizar Inteiro Teor']").text.strip()
     id_num = re.sub(r"[^0-9]", "", id_text)
-    print(f"ID number: {id_num}")
 
     tx = node.select_one("table div[style='display: none;']").text.strip()
-    print(f"Text content length: {len(tx)}")
 
     keys = [unidecode(re.sub(r"[^a-z ]", "", re.sub(r"\s+", "_", k.text.strip().lower())))
             for k in node.select("table tr td strong")]
@@ -136,24 +134,16 @@ def parse_cjpg_lawsuit(node):
     # Replace "datadedisponibilizao" with "data_de_disponibilizacao" in keys
     keys = ['data_de_disponibilizacao' if k == 'datadedisponibilizao' else k for k in keys]
 
-    print(f"Keys: {keys}")
-
     vals = []
     for strong_tag in node.select("table tr td strong"):
         next_sibling = strong_tag.next_sibling
         if isinstance(next_sibling, NavigableString):
             vals.append(next_sibling.strip())
 
-    print(f"Values: {vals}")
-
     infos = pd.DataFrame([dict(zip(keys, vals))])
-    print("Info DataFrame created")
 
     data = pd.DataFrame({'n_processo': [id_num], 'codigo': [cd]})
     result = pd.concat([data, infos], axis=1)
     result['resumo'] = tx
-    print("Result DataFrame created")
 
-    print("Finished parsing lawsuit node")
-    result.info()
     return result
