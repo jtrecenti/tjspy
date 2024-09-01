@@ -24,12 +24,7 @@ jobs:
         run: poetry install
 
       - name: Test with pytest
-        run: poetry run pytest tests/ --cov=tjspy --cov-report=xml
-
-      - name: Use Codecov to track coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage.xml   # coverage report
+        run: poetry run pytest tests/
 
       - name: Build documentation
         run: poetry run make html --directory docs/
@@ -38,7 +33,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    
+
     # Only run this job if the "ci" job passes
     needs: ci
 
