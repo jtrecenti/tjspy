@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.10,<4.0"
 requests = "^2.32.3"
 pathlib = "^1.0.1"
 datetime = "^5.5"
@@ -21,6 +21,7 @@ urllib3 = "^2.2.2"
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.1.1"
 pytest = "^8.3.2"
+sphinx = "^8.0.2"
 
 [tool.semantic_release]
 version_toml = [
@@ -28,7 +29,7 @@ version_toml = [
 ]                                                    # version location
 branch = "main"                                      # branch to make releases of
 changelog_file = "CHANGELOG.md"                      # changelog file
-build_command = "pip install poetry && poetry build" # build dists 
+build_command = "pip install poetry && poetry build" # build dists
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
