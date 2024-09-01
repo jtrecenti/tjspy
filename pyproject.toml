@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tjspy"
-version = "0.1.0"
+version = "0.0.0"
 description = "Web Scraper TJSP in python"
 authors = ["Julio Trecenti"]
 license = "MIT"
